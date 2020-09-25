@@ -2,17 +2,20 @@ import Phaser from 'phaser'
 import BootScene from './scenes/BootScene'
 import PlayScene from './scenes/PlayScene'
 
+// let gameSettings = {
+//   playerSpeed: 200
+// }
 
 function launch(containerId) {
   return new Phaser.Game({
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 256,
+    height: 272,
     parent: containerId,
     physics: {
       default: 'arcade',
       arcade: {
-        gravity: { y: 300 },
+        //gravity: { y: 300 },
         debug: false
       }
     },
