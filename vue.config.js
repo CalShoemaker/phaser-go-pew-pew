@@ -20,6 +20,6 @@ module.exports = {
   },
   devServer: {
     open: true,
-    hot: false
+    hot: true
   }
 }
