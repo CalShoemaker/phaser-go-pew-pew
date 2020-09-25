@@ -1,22 +1,86 @@
 import { Scene } from 'phaser'
-import sky from '@/game/assets/sky.png'
-import bomb from '@/game/assets/bomb.png'
-import thudMp3 from '@/game/assets/thud.mp3'
-import thudOgg from '@/game/assets/thud.ogg'
-
-
+import background from '@/game/assets/background.png'
+import ship from '@/game/assets/ship.png'
+import ship2 from '@/game/assets/ship2.png'
+import ship3 from '@/game/assets/ship3.png'
+import explosion from '@/game/assets/explosion.png'
+import powerUp from '@/game/assets/power-up.png'
+import player from '@/game/assets/player.png'
+import beam from '@/game/assets/beam.png'
 export default class BootScene extends Scene {
   constructor () {
     super({ key: 'BootScene' })
   }
 
   preload () {
-    this.load.image('sky', sky)
-    this.load.image('bomb', bomb)
-    this.load.audio('thud', [thudMp3, thudOgg])
+    this.load.image('background', background);
+    this.load.spritesheet('ship', ship, { frameWidth:16, frameHeight:16 });
+    this.load.spritesheet('ship2', ship2, { frameWidth:32, frameHeight:16 });
+    this.load.spritesheet('ship3', ship3, { frameWidth:32, frameHeight:32 });
+    this.load.spritesheet('explosion', explosion, { frameWidth:16, frameHeight:16 });
+    this.load.spritesheet('power-up', powerUp, { frameWidth:16, frameHeight:16 });
+    this.load.spritesheet('beam', beam,  { frameWidth:16, frameHeight:16 });
+    this.load.spritesheet('player', player, { frameWidth:16, frameHeight:24 });
   }
 
   create () {
+    this.anims.create({
+      key: "ship_anim",
+      frames: this.anims.generateFrameNumbers("ship"),
+      frameRate: 20,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: "ship2_anim",
+      frames: this.anims.generateFrameNumbers("ship2"),
+      frameRate: 20,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: "ship3_anim",
+      frames: this.anims.generateFrameNumbers("ship3"),
+      frameRate: 20,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: "explosion",
+      frames: this.anims.generateFrameNumbers("explosion"),
+      frameRate: 20,
+      repeat: 0,
+      hideOnComplete: true
+    });
+
+    this.anims.create({
+      key: "red",
+      frames: this.anims.generateFrameNumbers("power-up", { start:0, end:1 }),
+      frameRate: 20,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: "gray",
+      frames: this.anims.generateFrameNumbers("power-up", { start:2, end:3 }),
+      frameRate: 20,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: "thrust",
+      frames: this.anims.generateFrameNumbers("player"),
+      frameRate: 20,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: "beam_anim",
+      frames: this.anims.generateFrameNumbers("beam"),
+      frameRate: 20,
+      repeat: -1
+    });
+    
     this.scene.start('PlayScene')
   }
 }
