@@ -14,7 +14,7 @@ export default class PlayScene extends Scene {
   // Create stuff
   create () {
     const background = this.add.tileSprite(0, 0, this.game.config.width, this.game.config.height, "background");
-
+    const player = new Player(this);
     background.height = this.game.config.height;
     background.width = this.game.config.width;
 
@@ -23,15 +23,11 @@ export default class PlayScene extends Scene {
     
     this.enemies = this.physics.add.group();
     this.projectiles = this.add.group();
-    //this.powerUps = this.createPowerUps();
     this.powerUps = this.physics.add.group();
     this.players = this.physics.add.group();
-    this.players.add(new Player(this));
 
-    // TODO: Find the right way to set bounds from the proto
-    for( let plen = 0; plen < this.players.getChildren().length; plen++){
-      this.players.getChildren()[plen].setCollideWorldBounds(true);
-    }
+    this.players.add(player);
+    player.setCollideWorldBounds(true);
 
     this.cursorKeys = this.input.keyboard.createCursorKeys();    
     this.spacebar = this.input.keyboard.addKey(Input.Keyboard.KeyCodes.SPACE);
@@ -89,30 +85,6 @@ export default class PlayScene extends Scene {
     this.destroyShip(enemy);
   }
 
-  // TODO: Clean this up
-  createPowerUps(objects){
-    let maxObjects = objects || 4;
-    let powerUps = this.physics.add.group();
-    for(var i = 0; i <= maxObjects; i++){
-      let powerUp = this.physics.add.sprite(16, 16, "power-up");
-      powerUps.add(powerUp);
-      powerUp.setRandomPosition(0, 0, this.game.config.width, this.game.config.height);
-      
-      if( Math.Between(0, this.game.config.width) > 0.5){
-        powerUp.play("red");
-      } else {
-        powerUp.play("gray");
-      }
-      
-      powerUp.setVelocity(100,100)
-      powerUp.setCollideWorldBounds(true);
-
-      powerUp.setBounce(1);
-    }
-    
-    return powerUps;
-  }
-
   // the loop
   update () {
     
@@ -134,7 +106,6 @@ export default class PlayScene extends Scene {
     this.background.tilePositionY -= backgroundSpeed;
     this.movePlayer();
 
-    
     // TODO: improve these updates
     for (let i = 0; i < this.projectiles.getChildren().length; i++){
       let beam = this.projectiles.getChildren()[i];
@@ -149,13 +120,12 @@ export default class PlayScene extends Scene {
 
   // Move Player
   movePlayer(){
+    let player1 = this.players.getChildren()[0];
     
-    let player2 = this.players.getChildren()[0];
-    
-    player2.update(this.cursorKeys);
+    player1.update(this.cursorKeys);
 
     if(Input.Keyboard.JustDown(this.spacebar)){
-      player2.shootBeam();
+      player1.shootBeam();
     }
   }
 
