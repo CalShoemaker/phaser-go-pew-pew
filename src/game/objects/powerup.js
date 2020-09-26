@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 
 import powerUpImg from '@/game/assets/power-up.png'
 
-class PowerUp extends Phaser.GameObjects.Sprite {
+class PowerUp extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y){
         super(scene, x, y, "power-up");
         scene.add.existing(this);

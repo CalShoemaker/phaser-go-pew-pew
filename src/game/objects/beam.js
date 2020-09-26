@@ -4,9 +4,9 @@ import beamImg from '@/game/assets/beam.png'
 
 class Beam extends Phaser.GameObjects.Sprite{
     
-    constructor(scene){
-        var x = scene.player.x;
-        var y = scene.player.y - 16;
+    constructor(scene, ship){
+        var x = ship.x;
+        var y = ship.y - 16;
 
         super(scene, x, y, "beam");
 
@@ -19,7 +19,7 @@ class Beam extends Phaser.GameObjects.Sprite{
     }
 
     update(){
-        if(this.y < 32){
+        if(this.y < 0){
             this.destroy();
         }
     }

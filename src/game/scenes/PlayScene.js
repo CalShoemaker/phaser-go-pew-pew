@@ -1,9 +1,10 @@
 import {Input, Math, Scene }from 'phaser'
 
-//import Player from '../objects/player';
+import Player from '../objects/player';
 import Beam from '../objects/beam';
 import Enemy from '../objects/enemy';
 import Explosion from '../objects/explosion';
+import PowerUp from '../objects/powerup';
 
 export default class PlayScene extends Scene {
   constructor () {
@@ -20,33 +21,35 @@ export default class PlayScene extends Scene {
     this.background = background;
     this.background.setOrigin(0,0);
     
-    //this.ship.setScale(2);
     this.enemies = this.physics.add.group();
-    
+    this.projectiles = this.add.group();
     //this.powerUps = this.createPowerUps();
-    
-    this.player = this.physics.add.sprite(this.game.config.width / 2 - 8, this.game.config.height - 64, "player");
-    this.player.play("thrust");
-    this.player.setCollideWorldBounds(true);
+    this.powerUps = this.physics.add.group();
+    this.players = this.physics.add.group();
+    this.players.add(new Player(this));
 
-    //this.player = new Player(this);
+    // TODO: Find the right way to set bounds from the proto
+    for( let plen = 0; plen < this.players.getChildren().length; plen++){
+      this.players.getChildren()[plen].setCollideWorldBounds(true);
+    }
 
     this.cursorKeys = this.input.keyboard.createCursorKeys();    
     this.spacebar = this.input.keyboard.addKey(Input.Keyboard.KeyCodes.SPACE);
     
-    this.projectiles = this.add.group();
-    
-    // this.physics.add.collider(this.projectiles, this.powerUps, (projectile)=>{ 
-    //   projectile.destroy();
-    // });
-
-    this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp, null, this);
-    this.physics.add.overlap(this.player, this.enemies, this.hurtPlayer, null, this);
+    this.physics.add.overlap(this.players, this.powerUps, this.pickPowerUp, null, this);
+    this.physics.add.overlap(this.players, this.enemies, this.hurtPlayer, null, this);
     this.physics.add.overlap(this.projectiles, this.enemies, this.hitEnemy, null, this);
 
-    this.timedEvent = this.time.addEvent({ 
+    this.generateEnemies = this.time.addEvent({ 
       delay: 1000, 
       callback: this.generateEnemy, 
+      callbackScope: this, 
+      loop: true 
+    });
+
+    this.generatePowerUps = this.time.addEvent({ 
+      delay: 5000, 
+      callback: this.generatePowerUp, 
       callbackScope: this, 
       loop: true 
     });
@@ -57,6 +60,15 @@ export default class PlayScene extends Scene {
     //for(let x=0; x<=5; x++){
       this.enemies.add(new Enemy(this));
     //}
+  }
+
+  generatePowerUp(){
+    let powerUp = new PowerUp(this);
+    this.powerUps.add(powerUp);      
+    powerUp.setRandomPosition(0, 0, this.game.config.width, this.game.config.height);
+    powerUp.setVelocity(100,100)
+    powerUp.setCollideWorldBounds(true);
+    powerUp.setBounce(1);
   }
 
   // Pick up a power up
@@ -91,6 +103,7 @@ export default class PlayScene extends Scene {
       } else {
         powerUp.play("gray");
       }
+      
       powerUp.setVelocity(100,100)
       powerUp.setCollideWorldBounds(true);
 
@@ -120,10 +133,7 @@ export default class PlayScene extends Scene {
     
     this.background.tilePositionY -= backgroundSpeed;
     this.movePlayer();
-    
-    if(Input.Keyboard.JustDown(this.spacebar)){
-      this.shootBeam();
-    }
+
     
     // TODO: improve these updates
     for (let i = 0; i < this.projectiles.getChildren().length; i++){
@@ -139,23 +149,13 @@ export default class PlayScene extends Scene {
 
   // Move Player
   movePlayer(){
-    let speed = 200;
+    
+    let player2 = this.players.getChildren()[0];
+    
+    player2.update(this.cursorKeys);
 
-    // TODO: Clean this up. This is two ternarys. Also, abstract speed. 
-    if(this.cursorKeys.left.isDown){
-      this.player.setVelocityX(-speed)
-    } else if(this.cursorKeys.right.isDown) {
-      this.player.setVelocityX(speed)
-    }else {
-      this.player.setVelocityX(0)
-    }
-
-    if(this.cursorKeys.up.isDown){
-      this.player.setVelocityY(-speed)
-    } else if(this.cursorKeys.down.isDown) {
-      this.player.setVelocityY(speed)
-    }else {
-      this.player.setVelocityY(0)
+    if(Input.Keyboard.JustDown(this.spacebar)){
+      player2.shootBeam();
     }
   }
 
