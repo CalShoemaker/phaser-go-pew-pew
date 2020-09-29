@@ -21,9 +21,9 @@ export default class PlayScene extends Scene {
     this.background = background;
     this.background.setOrigin(0,0);
     
-    this.enemies = this.physics.add.group();
-    this.projectiles = this.add.group();
-    this.powerUps = this.physics.add.group();
+    this.enemies = this.physics.add.group({ runChildUpdate: true });
+    this.projectiles = this.add.group({ runChildUpdate: true });
+    this.powerUps = this.physics.add.group({ runChildUpdate: true });
     this.players = this.physics.add.group();
 
     this.players.add(player);
@@ -87,12 +87,6 @@ export default class PlayScene extends Scene {
 
   // the loop
   update () {
-    
-    // TODO: Enemy factory 
-    for (let i = 0; i < this.enemies.getChildren().length; i++){
-      let enemy = this.enemies.getChildren()[i];
-      enemy.update();
-    }
 
     let backgroundSpeed = 0;
     if(this.cursorKeys.up.isDown){
@@ -105,12 +99,6 @@ export default class PlayScene extends Scene {
     
     this.background.tilePositionY -= backgroundSpeed;
     this.movePlayer();
-
-    // TODO: improve these updates
-    for (let i = 0; i < this.projectiles.getChildren().length; i++){
-      let beam = this.projectiles.getChildren()[i];
-      beam.update();
-    }
   }
 
   // Pew pew
