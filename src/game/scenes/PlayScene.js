@@ -61,8 +61,8 @@ export default class PlayScene extends Scene {
   generatePowerUp(){
     let powerUp = new PowerUp(this);
     this.powerUps.add(powerUp);      
-    powerUp.setRandomPosition(0, 0, this.game.config.width, this.game.config.height);
-    powerUp.setVelocity(100,100)
+    powerUp.setRandomPosition(32, 32, this.game.config.width - 32, this.game.config.height - 32);
+    powerUp.setVelocity(50, 50)
     powerUp.setCollideWorldBounds(true);
     powerUp.setBounce(1);
   }
