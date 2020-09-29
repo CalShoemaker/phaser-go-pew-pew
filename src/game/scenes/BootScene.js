@@ -27,35 +27,11 @@ export default class BootScene extends Scene {
   }
 
   create () {
-    
-    // playerConfig.anim.frames = this.anims.generateFrameNumbers(playerConfig.name);
-    // this.anims.create(playerConfig.anim);
-
-    // beamConfig.anim.frames = this.anims.generateFrameNumbers(beamConfig.name);
-    // this.anims.create(beamConfig.anim);
-    
-    // explosionConfig.anim.frames = this.anims.generateFrameNumbers(explosionConfig.name)
-    // this.anims.create(explosionConfig.anim);
-
-    // for(let plen = 0; plen < powerUpConfig.anim.length; plen++){
-    //   let powerUpAnim = powerUpConfig.anim[plen];
-    //   let frames = powerUpAnim.frames;
-
-    //   powerUpAnim.frames = this.anims.generateFrameNumbers(powerUpConfig.name, frames)
-    //   this.anims.create(powerUpAnim);
-    // }
-
-    // for(let elen = 0; elen < enemyConfig.length; elen++){
-    //   let enemy = enemyConfig[elen];
-    //   enemy.anim.frames = this.anims.generateFrameNumbers(enemy.name)
-    //   this.anims.create(enemy.anim)
-    // }    
     this.createAnimations(playerConfig);
     this.createAnimations(beamConfig);
     this.createAnimations(explosionConfig);
 
     this.createAnimations(powerUpConfig, powerUpConfig.anim.length, powerUpConfig.anim);
-    
     this.createAnimations(enemyConfig, enemyConfig.length);
     
     this.scene.start('PlayScene')
