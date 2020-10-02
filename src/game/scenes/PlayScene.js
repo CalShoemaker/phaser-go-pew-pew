@@ -10,7 +10,7 @@ export default class PlayScene extends Scene {
   constructor () {
     super({ key: 'PlayScene' })
   }
-  
+
   // Create stuff
   create () {
     const background = this.add.tileSprite(0, 0, this.game.config.width, this.game.config.height, "background");
@@ -20,7 +20,10 @@ export default class PlayScene extends Scene {
 
     this.background = background;
     this.background.setOrigin(0,0);
-    
+
+    this.score = 0;
+    this.scoreLabel = this.add.text(10,10, "SCORE " + this.score, {fontFamily:"VCR"});
+
     this.enemies = this.physics.add.group({ runChildUpdate: true });
     this.projectiles = this.add.group({ runChildUpdate: true });
     this.powerUps = this.physics.add.group({ runChildUpdate: true });
@@ -74,6 +77,7 @@ export default class PlayScene extends Scene {
 
   // Crash
   hurtPlayer(player, enemy){
+    this.updateScore(0)
     this.resetShipPosition(enemy);
     player.x = this.game.config.width / 2 - 8;
     player.y = this.game.config.height - 64;
@@ -82,7 +86,18 @@ export default class PlayScene extends Scene {
   // Blow ship up
   hitEnemy(projectile, enemy){
     projectile.destroy();
+    this.updateScore(enemy.speed * 10);
     this.destroyShip(enemy);
+  }
+
+  // Update Score
+  updateScore(value){
+    if(value) {
+      this.score += value;
+    } else {
+      this.score = 0;
+    }
+    this.scoreLabel.text = "SCORE " + this.score;
   }
 
   // the loop

@@ -13,7 +13,14 @@ export default {
 
 
 <style lang="scss">
+@font-face {
+    font-family: "VCR";
+    src: url("game/assets/font/VCR_OSD_MONO.ttf");
+    font-weight: 800;
+}
+
 body {
+  font-family: "VCR";
   height: 100vh;
   display: flex;
   justify-content: center;

@@ -31,8 +31,8 @@ class Enemy extends Phaser.GameObjects.Sprite{
 const enemyConfig = [{
     name: 'ship1',
     frame: { 
-        frameWidth: 16, 
-        frameHeight: 16 
+        frameWidth: 32, 
+        frameHeight: 32 
     },
     anim: {
         key: "ship1_anim",
@@ -53,8 +53,8 @@ const enemyConfig = [{
 },{
     name: 'ship3',
     frame: { 
-        frameWidth: 32, 
-        frameHeight: 32 
+        frameWidth: 16, 
+        frameHeight: 16 
     },
     anim: {
         key: "ship3_anim",
