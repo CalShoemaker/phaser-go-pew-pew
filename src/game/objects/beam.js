@@ -2,6 +2,21 @@ import Phaser from 'phaser';
 
 import beamImg from '@/game/assets/beam.png'
 
+const beamConfig = {
+    name: 'beam',
+    image: beamImg,
+    frame: { 
+        frameWidth: 16, 
+        frameHeight: 16 
+    },
+    anim: {
+        key: "beam_anim",
+        frameRate: 20,
+        repeat: -1
+    }
+}
+
+
 class Beam extends Phaser.GameObjects.Sprite{
     
     constructor(scene, ship){
@@ -25,19 +40,6 @@ class Beam extends Phaser.GameObjects.Sprite{
     }
 }
 
-const beamConfig = {
-    name: 'beam',   
-    frame: { 
-        frameWidth: 16, 
-        frameHeight: 16 
-    },
-    anim: {
-        key: "beam_anim",
-        frameRate: 20,
-        repeat: -1
-    }
-}
-
-export { beamImg, beamConfig };
+export { beamConfig };
 
 export default Beam

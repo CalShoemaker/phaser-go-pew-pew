@@ -46,18 +46,19 @@ export default class PlayScene extends Scene {
       loop: true 
     });
 
-    this.generatePowerUps = this.time.addEvent({ 
-      delay: 5000, 
-      callback: this.generatePowerUp, 
-      callbackScope: this, 
-      loop: true 
-    });
+    // this.generatePowerUps = this.time.addEvent({ 
+    //   delay: 5000, 
+    //   callback: this.generatePowerUp, 
+    //   callbackScope: this, 
+    //   loop: true 
+    // });
   }
 
   // Generate an enemy
   generateEnemy(){
+    let enemy = "ship" + Math.Between(1,3)
     //for(let x=0; x<=5; x++){
-      this.enemies.add(new Enemy(this));
+      this.enemies.add(new Enemy(this, enemy));
     //}
   }
 

@@ -2,6 +2,21 @@ import Phaser from 'phaser';
 import Beam from './beam';
 import playerImg from '@/game/assets/player.png'
 
+const playerConfig = {
+    name: 'player',   
+    speed: 100,
+    image: playerImg,
+    frame: { 
+        frameWidth: 16, 
+        frameHeight: 24 
+    },
+    anim: {
+        key: "thrust",
+        frameRate: 20,
+        repeat: -1
+    }
+}
+
 class Player extends Phaser.Physics.Arcade.Sprite{
     
     constructor(scene){
@@ -17,24 +32,19 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.play("thrust")
     }
     
-    create(){
-        this.scene.physics.add.sprite(this)
-    }
-
     update(cursorKeys){
-        let speed = 200;
         if(cursorKeys.left.isDown){
-            this.setVelocityX(-speed)
+            this.setVelocityX(-playerConfig.speed)
           } else if(cursorKeys.right.isDown) {
-            this.setVelocityX(speed)
+            this.setVelocityX(playerConfig.speed)
           }else {
             this.setVelocityX(0)
           }
       
           if(cursorKeys.up.isDown){
-            this.setVelocityY(-speed)
+            this.setVelocityY(-playerConfig.speed)
           } else if(cursorKeys.down.isDown) {
-            this.setVelocityY(speed)
+            this.setVelocityY(playerConfig.speed)
           }else {
             this.setVelocityY(0)
           }
@@ -45,19 +55,6 @@ class Player extends Phaser.Physics.Arcade.Sprite{
     }
 }
 
-const playerConfig = {
-    name: 'player',   
-    frame: { 
-        frameWidth: 16, 
-        frameHeight: 24 
-    },
-    anim: {
-        key: "thrust",
-        frameRate: 20,
-        repeat: -1
-    }
-}
-
-export { playerConfig, playerImg };
+export { playerConfig };
 
 export default Player
