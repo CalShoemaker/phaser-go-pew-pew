@@ -13,15 +13,18 @@ export default class PlayScene extends Scene {
 
   // Create stuff
   create () {
-    const background = this.add.tileSprite(0, 0, 1755, 800, "background");
     const player = new Player(this);
+    
+    const background = this.add.tileSprite(0, 0, this.game.config.height, this.game.config.width, "background");
+    
+    background.height = this.game.config.height;
+    background.width = this.game.config.width;
 
     this.background = background;
     this.background.setOrigin(0,0);
 
     this.score = 0;
     this.scoreLabel = this.add.text(10,10, "SCORE " + this.score, {fontFamily:"VCR"});
-
     this.enemies = this.physics.add.group({ runChildUpdate: true });
     this.projectiles = this.add.group({ runChildUpdate: true });
     this.powerUps = this.physics.add.group({ runChildUpdate: true });
@@ -54,7 +57,7 @@ export default class PlayScene extends Scene {
 
   // Generate an enemy
   generateEnemy(){
-    let enemy = "ship" + Math.Between(1,3)
+    let enemy = "ship" + Math.Between(1,3);
     //for(let x=0; x<=5; x++){
       this.enemies.add(new Enemy(this, enemy));
     //}
