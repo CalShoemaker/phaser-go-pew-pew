@@ -33,21 +33,23 @@ class Player extends Phaser.Physics.Arcade.Sprite{
     }
     
     update(cursorKeys){
+        const modifySpeed = (shift) => { return shift ? 2 : 1; };
+
         if(cursorKeys.left.isDown){
-            this.setVelocityX(-playerConfig.speed)
-          } else if(cursorKeys.right.isDown) {
-            this.setVelocityX(playerConfig.speed)
-          }else {
+            this.setVelocityX(-playerConfig.speed * modifySpeed(cursorKeys.left.shiftKey))
+        } else if(cursorKeys.right.isDown) {
+            this.setVelocityX(playerConfig.speed * modifySpeed(cursorKeys.right.shiftKey))
+        }else {
             this.setVelocityX(0)
-          }
-      
-          if(cursorKeys.up.isDown){
-            this.setVelocityY(-playerConfig.speed)
-          } else if(cursorKeys.down.isDown) {
-            this.setVelocityY(playerConfig.speed)
-          }else {
+        }
+    
+        if(cursorKeys.up.isDown){
+            this.setVelocityY(-playerConfig.speed * modifySpeed(cursorKeys.up.shiftKey))
+        } else if(cursorKeys.down.isDown) {
+            this.setVelocityY(playerConfig.speed * modifySpeed(cursorKeys.down.shiftKey))
+        }else {
             this.setVelocityY(0)
-          }
+        }
     }
 
     shootBeam(){
