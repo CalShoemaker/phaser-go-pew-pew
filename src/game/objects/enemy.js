@@ -59,7 +59,7 @@ class Enemy extends Phaser.GameObjects.Sprite{
     update(){
         this.y += this.speed;
 
-        if(this.y > 300){
+        if(this.y > this.scene.game.config.height){
             this.destroy();
         }
     }

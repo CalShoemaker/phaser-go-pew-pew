@@ -13,10 +13,8 @@ export default class PlayScene extends Scene {
 
   // Create stuff
   create () {
-    const background = this.add.tileSprite(0, 0, this.game.config.width, this.game.config.height, "background");
+    const background = this.add.tileSprite(0, 0, 1755, 800, "background");
     const player = new Player(this);
-    background.height = this.game.config.height;
-    background.width = this.game.config.width;
 
     this.background = background;
     this.background.setOrigin(0,0);
@@ -127,7 +125,6 @@ export default class PlayScene extends Scene {
     let player1 = this.players.getChildren()[0];
     
     player1.update(this.cursorKeys);
-
     if(Input.Keyboard.JustDown(this.spacebar)){
       player1.shootBeam();
     }

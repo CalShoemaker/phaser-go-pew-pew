@@ -1,5 +1,5 @@
 import { Scene } from 'phaser'
-import background from '@/game/assets/background.png'
+import background from '@/game/assets/milkyway.png'
 
 import { playerConfig } from '../objects/player'
 import { explosionConfig } from '../objects/explosion'
