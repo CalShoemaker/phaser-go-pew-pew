@@ -13,9 +13,8 @@ export default class PlayScene extends Scene {
 
   // Create stuff
   create () {
-    const player = new Player(this);
-    
     const background = this.add.tileSprite(0, 0, this.game.config.height, this.game.config.width, "background");
+    const player = new Player(this);
     
     background.height = this.game.config.height;
     background.width = this.game.config.width;
