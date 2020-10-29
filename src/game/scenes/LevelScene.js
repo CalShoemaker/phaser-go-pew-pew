@@ -1,4 +1,5 @@
 import { Input, Scene } from 'phaser'
+import Store from '../../store/index'
 
 import Enemy from '../objects/enemy'
 import Player from '../objects/player'
@@ -8,7 +9,7 @@ import Explosion from '../objects/explosion'
 export default class LevelScene extends Scene {
     constructor(config) {
         super({ key: config.key });
-        this.score = 0;
+        this.score = Store.getters['game/score'];
         this.acts = config.acts;
         this.activeAct = null;
         this.activeEvents = [];
@@ -135,13 +136,12 @@ export default class LevelScene extends Scene {
         } else {
             this.score = 0;
         }
-
+        Store.commit('game/setScore', this.score);
         this.scoreLabel.text = "SCORE " + this.score;
     }
 
     generateEnemy(event){
-        console.log("generate enemy", event)
-        for(let x = 0; x < event.multiplyer; x++){
+        for( let x = 0; x < event.multiplyer; x++ ) {
             this.enemies.add(new Enemy(this, event.type));
         }
     }
